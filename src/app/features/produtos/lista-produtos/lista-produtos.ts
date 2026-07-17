@@ -3,10 +3,13 @@ import { signal } from '@angular/core';
 import { Produto } from '../produto/produto';
 import { computed } from '@angular/core';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
+import { effect } from '@angular/core';
+import { UpperCasePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-lista-produtos',
-  imports: [Produto, PrecoFormatadoPipe],
+  imports: [Produto, PrecoFormatadoPipe, UpperCasePipe,],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css',
 })
@@ -19,7 +22,8 @@ export class ListaProdutos {
   {nome:'Headset Gamer', preco:699.99}
   ]);
   exibirProduto (nome: string){
-    console.log ('produtoSelecionado: ', nome);
+    //console.log ('produtoSelecionado: ', nome);
+    this.produtoSelecionado.set(nome);
   }
   adicionarProduto(){
     this.produtos.update(listaAtual =>[
@@ -34,6 +38,20 @@ substituirProdutos (){
     {nome: 'Arroz Fazenda', preco: 400},
     {nome: 'café grão de ouro', preco: 35.99},
   ]);
+  //criado uma função que vai somar todos os preços
 }
+constructor(){
+  effect(() =>{
+    console.log('Lista de Produtos Alterados: ', this.produtos());
+  });
+  effect(() => {
+    console.log('Valor total atualizado: ', this.valorTotal());
+  });
+  effect(()=> {
+if(typeof document !== 'undefined') {
+          document.title = `(${this.totalProdutos()})Minha Loja`;
 }
-//criado uma função que vai somar todos os preços
+  });
+ }
+ produtoSelecionado = signal<string | null>(null);
+}
