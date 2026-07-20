@@ -15,11 +15,26 @@ import { UpperCasePipe } from '@angular/common';
 })
 export class ListaProdutos {
   produtos = signal([
-  {nome: 'teclado Gamer', preco:49.99},
-  {nome: 'Mouse Gamer', preco:29.99},
-  {nome: 'monitor Gamer', preco:599.99},
-  {nome: 'Desktop Gamer', preco:4999.99},
-  {nome:'Headset Gamer', preco:699.99}
+  {
+    nome: 'teclado Gamer', 
+    preco:149.99
+  },
+  {
+    nome: 'Mouse Gamer', 
+    preco:229.99
+  },
+  {
+    nome: 'monitor Gamer', 
+    preco:1599.99
+  },
+  {
+    nome: 'Desktop Gamer', 
+    preco:4999.99
+  },
+  {
+    nome:'Headset Gamer', 
+    preco:699.99
+  }
   ]);
   exibirProduto (nome: string){
     //console.log ('produtoSelecionado: ', nome);
@@ -27,7 +42,7 @@ export class ListaProdutos {
   }
   adicionarProduto(){
     this.produtos.update(listaAtual =>[
-      ...listaAtual, {nome:'Sony Playstation 5', preco: 100 }
+      ...listaAtual, {nome:'Processador core i5 14550f', preco: 2500 }
     ]);
 //criado uma fun~ção para calcular a quantidade de produtos
   }
@@ -35,8 +50,11 @@ totalProdutos = computed(() => this.produtos().length);
 valorTotal = computed(()=> { return this.produtos().reduce((total, item)=> total + item.preco,0)});
 substituirProdutos (){
   this.produtos.set([
-    {nome: 'Arroz Fazenda', preco: 400},
-    {nome: 'café grão de ouro', preco: 35.99},
+    {nome: 'Teclado', preco: 40},
+    {nome: 'Mouse', preco: 10},
+    {nome: 'Monitor', preco: 100},
+    {nome: 'Desktop', preco: 500},
+    {nome: 'Headset', preco: 25},
   ]);
   //criado uma função que vai somar todos os preços
 }
@@ -54,4 +72,14 @@ if(typeof document !== 'undefined') {
   });
  }
  produtoSelecionado = signal<string | null>(null);
+ carrinho = signal <{ nome: string; preco: number }[]>([]);
+
+ adicionarAoCarrinho (produto: {nome:string; preco: number }){
+  this.carrinho.update(listaAtual =>
+    [...listaAtual,produto]);}
+    quantidadeCarrinho = computed(() => this.carrinho().length)
+    totalCarrinho = computed(()=> {
+      return this.carrinho().reduce((total, item) =>
+      total + item.preco,0);
+    });
 }
