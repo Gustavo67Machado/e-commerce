@@ -1,4 +1,11 @@
-<!--Remove templete padrão angular cli-->
-<!--Adiciona o componente Produto para exibir as imformações do produto-->
-<h1>Minha Loja Virtual</h1>
-<app-lista-produtos></app-lista-produtos>
+<!--Cabeçalho: nome da loja criado com variável {{nomeLoja}}-->
+<!-- para alteraro nome da loja localizar na class app variável nomeLoja -->
+<h1>{{nomeLoja}}</h1>
+
+<!-- barra de navegação, adicionar -->
+<nav>
+    <a routerLink="/">Produtos</a>
+    <a routerLink="/carrinho">carrinho</a>
+</nav>
+<hr />
+<router-outlet></router-outlet>
