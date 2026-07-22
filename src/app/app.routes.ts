@@ -1,26 +1,6 @@
-// import { Routes } from '@angular/router';
-// //import {ListaProdutos} from './features/produtos/lista-produtos/lista-produtos'; import Legado
-// import { Carrinho } from './features/carrinho/carrinho/carrinho';
-// import {Home} from './features/home/home/home';
-
-// export const routes: Routes = [
-// {
-//     path: '',
-//     component: Home,
-// },
-// //código legado com LazyLoading
-// // {
-// //     path:'produtos',
-// //     component: ListaProdutos,
-// // },
-
-// {,
-//     path: 'carrinho',
-//     component: Carrinho,
-// },
-// ];
-//! codígo final LazyLoading e LoadingComponent
 import { Routes } from "@angular/router";
+import { authGuard } from "./core/auth.guard";
+
 export const routes: Routes = [
     {
         path:'',
@@ -34,6 +14,7 @@ export const routes: Routes = [
     },
     {
         path:'carrinho',
+        canActivate: [authGuard],
         loadComponent: () =>
             import('./features/carrinho/carrinho/carrinho').then((m) => m.Carrinho),
     },
