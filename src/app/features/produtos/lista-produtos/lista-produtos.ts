@@ -5,6 +5,9 @@ import { computed } from '@angular/core';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import { effect } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
+import { produtoService } from '../produto.service';
+import { inject } from '@angular/core';
+import { Produtos } from '../produtos';
 
 
 @Component({
@@ -14,28 +17,31 @@ import { UpperCasePipe } from '@angular/common';
   styleUrl: './lista-produtos.css',
 })
 export class ListaProdutos {
-  produtos = signal([
-  {
-    nome: 'teclado Gamer', 
-    preco:149.99
-  },
-  {
-    nome: 'Mouse Gamer', 
-    preco:229.99
-  },
-  {
-    nome: 'monitor Gamer', 
-    preco:1599.99
-  },
-  {
-    nome: 'Desktop Gamer', 
-    preco:4999.99
-  },
-  {
-    nome:'Headset Gamer', 
-    preco:699.99
-  }
-  ]);
+
+  //!remover a lista produtos, agora os dados serão carregados via api Fakestoreapi
+
+produtos = signal <{ nome: string; preco: number } []> ([]);
+
+//?criar um estado de carregamento, 
+// ** true: requisição em andamento, exibir indicador  no templete
+// ! false: esconder indicador e exibir a lista de produtos
+carregando = signal(true);
+//! cria o metodo para a requisição dos produtos
+
+carregarProdutos(){
+  this.carregando.set(true);
+  this.produtoService.buscarProdutos().subscribe({
+        next:(dados) => {
+          const produtos = this.produtoService.transformarProdutos(dados);
+          this.produtos.set(produtos);
+          this.carregando.set(false);
+        },
+        error: (erro) =>{
+          console.error('Erro ao carregar os Produtos:, ', erro);
+          this.carregando.set(false);
+        },
+  });
+}
   exibirProduto (nome: string){
     //console.log ('produtoSelecionado: ', nome);
     this.produtoSelecionado.set(nome);
@@ -58,7 +64,11 @@ substituirProdutos (){
   ]);
   //criado uma função que vai somar todos os preços
 }
+//! injetar httpclient dentro de construct, restruturar constructor
 constructor(){
+  //! Carregar a Api
+  this.carregarProdutos();
+  //! effects continuam iguais
   effect(() =>{
     console.log('Lista de Produtos Alterados: ', this.produtos());
   });
@@ -76,10 +86,12 @@ if(typeof document !== 'undefined') {
 
  adicionarAoCarrinho (produto: {nome:string; preco: number }){
   this.carrinho.update(listaAtual =>
-    [...listaAtual,produto]);}
-    quantidadeCarrinho = computed(() => this.carrinho().length)
-    totalCarrinho = computed(()=> {
-      return this.carrinho().reduce((total, item) =>
-      total + item.preco,0);
-    });
+    [...listaAtual, produto]);}
+       quantidadeCarrinho = computed(() => this.carrinho().length)
+       totalCarrinho = computed(()=> {
+       return this.carrinho().reduce((total, item) =>
+       total + item.preco,0);
+     });
+    //?================== inject ===============
+    private produtoService = inject(produtoService)
 }
