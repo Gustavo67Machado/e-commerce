@@ -14,7 +14,10 @@ type Produto = {
 export class produtoService {
     private http = inject(HttpClient);
 
-    private Api = 'https://fakestoreapi.com/products';
+    private Api = 'https://fakestoreapi.com/products';  
+    
+
+
     buscarProdutos(){
         return this.http.get<ProdutoApi []>(this.Api);
     }
@@ -24,5 +27,5 @@ export class produtoService {
             preco: p.price,
         }));
 
-    }
+    }   
 }
