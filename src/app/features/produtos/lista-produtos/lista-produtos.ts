@@ -29,7 +29,8 @@ carregando = signal(true);
 //! cria o metodo para a requisição dos produtos
 
 carregarProdutos(){
-  this.carregando.set(true);
+  this.carregando.set(true); //! Ativa o loading
+  this.erro.set(null); //?limpa o erro anterior
   this.produtoService.buscarProdutos().subscribe({
         next:(dados) => {
           const produtos = this.produtoService.transformarProdutos(dados);
@@ -38,6 +39,7 @@ carregarProdutos(){
         },
         error: (erro) =>{
           console.error('Erro ao carregar os Produtos:, ', erro);
+          this.erro.set('Erro ao carregar Produtos. Verifique a sua conexão e tente novamente');
           this.carregando.set(false);
         },
   });
@@ -83,6 +85,7 @@ if(typeof document !== 'undefined') {
  }
  produtoSelecionado = signal<string | null>(null);
  carrinho = signal <{ nome: string; preco: number }[]>([]);
+ erro = signal <string | null > (null);
 
  adicionarAoCarrinho (produto: {nome:string; preco: number }){
   this.carrinho.update(listaAtual =>
