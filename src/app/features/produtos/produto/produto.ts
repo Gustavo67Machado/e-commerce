@@ -1,5 +1,5 @@
 //fluxo de dados criados 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, output } from '@angular/core';
 import { UpperCasePipe, CurrencyPipe } from '@angular/common';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 
@@ -17,8 +17,14 @@ export class Produto {
   
   //Saida de dados para produtos selecionados para lista produto
   @Output() produtoSelecionado = new EventEmitter<string>();
-
   selecionarProduto() {
     this.produtoSelecionado.emit(this.nome);
-    }
+  }
+  @Output() produtoAdicionado = new EventEmitter<{
+    nome: string;
+    preco: number;
+  }>();
+  adicionarAoCarrinho() {
+    this.produtoAdicionado.emit(({nome: this.nome, preco: this.preco}))
+  }
 }
