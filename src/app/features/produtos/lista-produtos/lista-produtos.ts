@@ -7,12 +7,13 @@ import { effect } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
 import { produtoService } from '../produto.service';
 import { inject } from '@angular/core';
-import { Produtos } from '../produtos';
+// import { Produto } from '../produtos';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-lista-produtos',
-  imports: [Produto, PrecoFormatadoPipe, UpperCasePipe,],
+  imports: [Produto, PrecoFormatadoPipe, UpperCasePipe, MatButtonModule],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css',
 })
