@@ -9,11 +9,12 @@ import { produtoService } from '../produto.service';
 import { inject } from '@angular/core';
 // import { Produto } from '../produtos';
 import { MatButtonModule } from '@angular/material/button';
+import{ MatCardModule} from '@angular/material/card';
 
 
 @Component({
   selector: 'app-lista-produtos',
-  imports: [Produto, PrecoFormatadoPipe, UpperCasePipe, MatButtonModule],
+  imports: [Produto, PrecoFormatadoPipe, UpperCasePipe, MatButtonModule, MatCardModule],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css',
 })
