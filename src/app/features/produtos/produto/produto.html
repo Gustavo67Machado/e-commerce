@@ -2,12 +2,13 @@
 
 <h3>{{ nome | uppercase}}</h3>
 <p>{{ preco | precoFormatado}}</p>
-<button (click)="selecionarProduto()">
+<button mat-stroked-button color="accent" (click)="selecionarProduto()">
     Selecionar {{ nome }}
 </button>
-<button (click)="adicionarAoCarrinho()">
+<button mat-raised-button color="primary" (click)="adicionarAoCarrinho()">
     Adicionar ao carrinho
 </button>
  
 
 </div>
+
