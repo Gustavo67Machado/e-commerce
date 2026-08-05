@@ -1,17 +1,15 @@
-<!--Cabeçalho: nome da loja criado com variável {{nomeLoja}}-->
-<!-- para alteraro nome da loja localizar na class app variável nomeLoja -->
-<h1>{{nomeLoja}}</h1>
 
-<!-- barra de navegação, adicionar -->
-<nav>
-    <a routerLink="/">Home</a> |
-    <a routerLink="/produtos">produtos</a> |
-    <a routerLink="/carrinho">carrinho</a>
-</nav>
-<hr />
-<button (click)="login()">Login</button>
-<button (click)="logout()">Logout</button>
+<app-header></app-header>
+<!-- Controle de autenticção temporaria -->
+
+<main style="padding: 20px;">  
+
+    <section class="auth-temp"  style="margin-bottom: 20px;">
+<button mat-raised-button (click)="login()">Login</button>
+<button mat-stroked-button (click)="logout()">Logout</button>
 <p>Status: {{usuarioLogado() ? 'Logado' : 'Delogado'}}</p>
-<hr>
+    </section>
 
+</main>
+<!-- Conteudo dinamico principal -->
 <router-outlet></router-outlet>
