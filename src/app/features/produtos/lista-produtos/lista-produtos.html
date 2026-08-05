@@ -1,5 +1,6 @@
 <!-- Estado 1: Loading -->
- @if (carregando()){
+<h2>Produtos</h2> 
+@if (carregando()){
     <p>Carregando Produtos...</p>
  }
  <!-- Estado 2: erro -->
@@ -7,22 +8,33 @@
     <P style="color:red;">{{erro() }}</P>
     <button (click)="carregarProdutos()">Tentar novamente</button>
 }
-<hr>
 <!-- Estado 3: secesso -->
  @if(!carregando() && !erro()){
     <p>Total de produtos: {{totalProdutos ()}} </p>
   
 <hr>
-@for(item of produtos(); track $index){
-    <app-produto
-    [nome] = "item.nome"
-    [preco] = "item.preco"
-    (produtoSelecionado)="exibirProduto($event)"
-    (produtoAdicionado)="adicionarAoCarrinho($event)"
-    >
-    </app-produto>
-    <!-- <button (click)= "adicionarAoCarrinho(item)">Adicionar ao carrinho</button> -->
-}
+
+<section class="grid-produtos">
+    @for(item of produtos(); track $index){
+        <app-produto
+        [nome] = "item.nome"
+        [preco] = "item.preco"
+        (produtoSelecionado)="exibirProduto($event)"
+        (produtoAdicionado)="adicionarAoCarrinho($event)"
+        >
+        </app-produto>
+    }
+</section>
+
+
+
+
+
+
+
+<!-- <button (click)= "adicionarAoCarrinho(item)">Adicionar ao carrinho</button> -->
+
+
 }
 <h2>carrinho</h2>
 @for(item of carrinho(); track $index){
@@ -30,5 +42,3 @@
 }
 <p><strong>Itens no carrinho: </strong>{{quantidadeCarrinho()}}</p>
 <p><strong>Total no carrinho: </strong>{{totalCarrinho()| precoFormatado}}</p>
-<!-- adicionado butoon e carrinho-->
- <!-- adicionado buton para subistituir produtos.-->
