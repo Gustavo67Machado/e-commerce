@@ -4,6 +4,7 @@ import { UpperCasePipe, CurrencyPipe } from '@angular/common';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import { MatButton} from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader, MatCardActions,MatCardTitle } from "@angular/material/card";
+// hsdbqhusbd
 
 @Component({
   selector: 'app-produto',
