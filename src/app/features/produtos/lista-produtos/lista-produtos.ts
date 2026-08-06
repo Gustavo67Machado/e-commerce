@@ -5,12 +5,12 @@ import { computed } from '@angular/core';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import { effect } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
-import { produtoService } from '../produto.service';
+import { produtoService } from '../../../core/service/produto.service';
 import { inject } from '@angular/core';
 // import { Produto } from '../produtos';
 import { MatButtonModule } from '@angular/material/button';
 import{ MatCardModule} from '@angular/material/card';
-
+import { CarrinhoService } from '../../../core/service/carrinho.service'; 
 
 @Component({
   selector: 'app-lista-produtos',
@@ -90,13 +90,13 @@ if(typeof document !== 'undefined') {
  erro = signal <string | null > (null);
 
  adicionarAoCarrinho (produto: {nome:string; preco: number }){
-  this.carrinho.update(listaAtual =>
-    [...listaAtual, produto]);}
-       quantidadeCarrinho = computed(() => this.carrinho().length)
-       totalCarrinho = computed(()=> {
-       return this.carrinho().reduce((total, item) =>
-       total + item.preco,0);
-     });
-    //?================== inject ===============
-    private produtoService = inject(produtoService)
+  this.CarrinhoService.adicionar(produto)
+  }
+  
+  //?================== inject ===============
+  private produtoService = inject(produtoService)
+  public CarrinhoService = inject(CarrinhoService)
+
+  quantidadedeCarrinho = this.CarrinhoService.quantidadedeItens;
+  totalCarrinho = this.CarrinhoService.totalItens;
 }
