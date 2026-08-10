@@ -1,24 +1,29 @@
 import { Injectable } from "@angular/core";
 import { signal } from "@angular/core";
 import { computed } from "@angular/core";
-import { Produto } from "../../features/produtos/produto/produto";
 
-
+type ItemCarrinho = {
+    nome: string;
+    preco: number;
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class CarrinhoService {
     //!estado Global
-    private carrinho = signal<{nome: string; preco: number}[]>([]);
+    private carrinho = signal<ItemCarrinho[]>([]);
     //? Selectores
     itens = computed(()=> this.carrinho());
     quantidadedeItens = computed(() => this.carrinho().length); //!Quantidade de itens
     totalItens = computed(() =>
     this.carrinho().reduce((total, item) => total + item.preco,0)
 );
+
+carrinhoVazio = computed(() => this.carrinho().length === 0);
+
 // TODO: Ações
-adicionar(Produto: {nome: string; preco: number}){
+adicionar(Produto:ItemCarrinho){
     this.carrinho.update(Lista => [...Lista,Produto]);
 
 }
