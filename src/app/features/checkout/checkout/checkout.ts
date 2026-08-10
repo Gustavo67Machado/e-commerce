@@ -7,7 +7,7 @@ import { Validators } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
 import { ValidationErrors } from '@angular/forms';
 import { CarrinhoService } from '../../../core/service/carrinho.service';
-
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +16,7 @@ import { CarrinhoService } from '../../../core/service/carrinho.service';
   styleUrl: './checkout.css',
 })
 export class Checkout {
+
   carrinhoService = inject(CarrinhoService);
 
   formulario = new FormGroup({
@@ -23,17 +24,32 @@ export class Checkout {
     email: new FormControl('',[Validators.required, Validators.email]),
     endereco: new FormControl('',[Validators.required, Validators.minLength(5)]),
   });
-  finalizar (){
-    if (this.formulario.invalid){
-      console.log('Formulario Inválido!');
+  finalizar () {
+    this.compraFinalizada.set(false);
+  if (this.carrinhoService.carrinhoVazio()){
+    console.log('Não é possivel finalizar a Compra com o carrinho vazio!');
+    return
+    }
+    if(this.formulario.invalid){
+      console.log('Formulário invalido');
+      this.formulario.markAllAsTouched();
       return;
     }
     const dados = this.formulario.value;
     const itens = this.carrinhoService.itens();
+    const total = this.carrinhoService.totalItens();
+
+    console.log('Compra finalizada com sucesso');
+    console.log('Dados do formulario', dados);
+    console.log('Itens do carrinho', itens);
+    console.log('Total da compra', total);
     
-    console.log('Dados do Formulario: ', dados);
-    console.log('Itens do Carrinho: ', itens);
+    this.carrinhoService.limpar();
+    this.formulario.reset();
+    this.compraFinalizada.set(true);
   }
+   
+  compraFinalizada = signal(false)
 }
 function nomeSemNumeros(control: AbstractControl): ValidationErrors | null{
   const valor = control.value;
