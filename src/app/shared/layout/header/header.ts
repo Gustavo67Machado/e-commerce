@@ -18,7 +18,6 @@ export class Header {
   nomeLoja = 'Lucia Santa';
   private carrinhoService = inject(CarrinhoService);
   quantidade = this.carrinhoService.quantidadedeItens;
-  
   private authService = inject(AuthService)
   usuarioLogado = this.authService.usuarioLogado;
   usuarioAtual = this.authService.usuarioAtual;
