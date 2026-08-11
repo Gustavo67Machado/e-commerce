@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { CarrinhoService } from '../../../core/service/carrinho.service';
+import { AuthService } from '../../../core/service/auth.service';
+
 CarrinhoService
 
 @Component({
@@ -16,4 +18,12 @@ export class Header {
   nomeLoja = 'Lucia Santa';
   private carrinhoService = inject(CarrinhoService);
   quantidade = this.carrinhoService.quantidadedeItens;
+  
+  private authService = inject(AuthService)
+  usuarioLogado = this.authService.usuarioLogado;
+  usuarioAtual = this.authService.usuarioAtual;
+
+  sair(){
+    this.authService.logout();
+  }
 }
