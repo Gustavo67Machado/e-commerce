@@ -4,9 +4,11 @@ import { catchError } from "rxjs";
 import { throwError } from "rxjs";
 import { inject } from "@angular/core";
 import { AuthService } from "../service/auth.service";
+import { Router } from "@angular/router";
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) =>{
     const authService = inject(AuthService);
+    const router = inject (Router);
 
     //! Novo metodo de TOKEN
     const token = authService.obterToken();
@@ -32,6 +34,13 @@ req.clone ({
             console.error('ERRO GLOBAL:', error);
             if (error.status === 401){
                 console.warn('Não Autorizado!');
+                authService.logout();
+                router.navigateByUrl('/login');
+            
+            }
+            if(error.status ===403){
+                console.warn('acesso negado, perfil sem permissão!');
+                router.navigateByUrl('/produtos')
             }
             if(error.status === 500){
                 console.warn('Erro Interno do servidor!');
