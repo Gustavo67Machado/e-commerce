@@ -18,8 +18,9 @@ export class AuthService {
     private tokenJwt = signal<string | null> (null);
 
 
-    usuarioAtual = computed(() => this.usuario());
     usuarioLogado = computed(() => this.usuario() !== null);
+    usuarioAtual = computed(() => this.usuario());
+    estaLogado = computed(() => this.usuario() !== null);
     token = computed(() => this.tokenJwt());
     admin = computed(() => this.usuario()?.perfil ==='admin');
 
