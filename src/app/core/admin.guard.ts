@@ -10,7 +10,7 @@ export const adimnGuard: CanActivateFn = () => {
 
 //! - 1) Verifecar se o usuario esta logado
 if(!authService.usuarioLogado()){
-    return router.createUrlTree(['/login']);
+    return router.createUrlTree(['/acesso-negado']);
     }
     //! - 2) Verificar se o usuario atual (Logado), se tem perfil adm
     if(!authService.admin()){
@@ -18,4 +18,4 @@ if(!authService.usuarioLogado()){
     }
     //! - 3) se o usuario estiver logado e for adm = ACESSO LIBERADO
     return true;
-};
+}
