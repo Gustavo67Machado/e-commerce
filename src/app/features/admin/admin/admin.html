@@ -1,3 +1,51 @@
-<h2>Área Adiministrativa</h2>
-<!-- ! Esta pagina representa uma area de restrita de aplicações -->
- <!-- ! Somente usuarios com perfil de administrador devem conseguir acessar esta rota  -->
+<section class="painel-admin">
+
+    <h2>Àrea Administrativa</h2>
+
+    <hr>
+
+    <section>
+        <h3>Usuário Autenticado</h3>
+    @if(usuarioAtual()){
+        <p><strong>E-mail: </strong> {{ usuarioAtual()?.email }}</p>
+        <p><strong>Perfil: </strong>{{usuarioAtual()?.perfil}}</p>
+        <p>{{mansagemPerfil()}}</p>
+    }
+        </section>
+
+        <hr>
+
+        <section class="card-admin">
+            <article>
+                <h3>Produtos cadastrados</h3>
+                <p>{{totalProdutosCadastrados()}}</p>
+            </article>
+
+            <article>
+                <h3>Produtos Pendentes</h3>
+                <p>{{pedidosPendentes()}}</p>
+            </article>
+
+            <article>
+                <h3>Usuarios Cadastrados</h3>
+                <p>{{usuariosCadastrados()}}</p>
+            </article>
+
+        </section>
+        <hr>
+
+        <section class="bloco-admin">
+            <h3>Ações Administrativas</h3>
+            <p>
+                Nessa Etapa as açoes ainda são representativas
+                nas proximas evoluções, podem ser conectadas via API reais.
+            </p>
+            <button type="button">Cadastrar Produto</button>
+            <button type="button">Gerenciar Usuario</button>
+            <button type="button">Gerenciar Produtos</button>
+
+        </section>
+
+        <hr>
+        <button type="button" (click)="sair()">Sair</button>
+    </section>
