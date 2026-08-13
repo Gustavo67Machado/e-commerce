@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
-import { Router, Routes } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../core/service/auth.service';
 
 @Component({
@@ -14,10 +14,12 @@ export class Login {
   private router = inject(Router);
   errologin = signal(false)
   formulario = new FormGroup({
+
+    
     email: new FormControl('',[Validators.required, Validators.email]),
     senha: new FormControl('',[Validators.required, Validators.minLength(3)]),
-  });
-
+    
+    });
   entrar(){
     this.errologin.set(false);
     if(this.formulario.invalid){
