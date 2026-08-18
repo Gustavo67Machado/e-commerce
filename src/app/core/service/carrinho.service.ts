@@ -17,8 +17,7 @@ export class CarrinhoService {
     itens = computed(()=> this.carrinho());
     quantidadedeItens = computed(() => this.carrinho().length); //!Quantidade de itens
     totalItens = computed(() =>
-    this.carrinho().reduce((total, item) => total + item.preco,0)
-);
+    this.carrinho().reduce((total, item) => total + item.preco,0));
 
 carrinhoVazio = computed(() => this.carrinho().length === 0);
 
