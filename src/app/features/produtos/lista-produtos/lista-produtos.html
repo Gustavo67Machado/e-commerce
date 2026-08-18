@@ -37,8 +37,8 @@
 
 }
 <h2>carrinho</h2>
-@for(item of CarrinhoService.itens(); track $index){
+@for(item of CarrinhoFacade.itensCarrinho(); track $index){
     <p>{{item.nome | uppercase}} - {{item.preco | precoFormatado}}</p>
 }
-<p><strong>Itens no carrinho: </strong>{{CarrinhoService.quantidadedeItens()}}</p>
-<p><strong>Total no carrinho: </strong>{{CarrinhoService.totalItens()| precoFormatado}}</p>
+<p><strong>Itens no carrinho: </strong>{{CarrinhoFacade.quantidadeCarrinho()}}</p>
+<p><strong>Total no carrinho: </strong>{{CarrinhoFacade.totalCarrinho()| precoFormatado}}</p>
