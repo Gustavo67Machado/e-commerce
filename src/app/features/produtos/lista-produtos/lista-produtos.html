@@ -26,19 +26,6 @@
     }
 </section>
 
-     
-
-
-
-
-
 <!-- <button (click)= "adicionarAoCarrinho(item)">Adicionar ao carrinho</button> -->
-
-
 }
-<h2>carrinho</h2>
-@for(item of CarrinhoFacade.itensCarrinho(); track $index){
-    <p>{{item.nome | uppercase}} - {{item.preco | precoFormatado}}</p>
-}
-<p><strong>Itens no carrinho: </strong>{{CarrinhoFacade.quantidadeCarrinho()}}</p>
-<p><strong>Total no carrinho: </strong>{{CarrinhoFacade.totalCarrinho()| precoFormatado}}</p>
+
