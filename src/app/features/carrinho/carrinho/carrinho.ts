@@ -14,8 +14,8 @@ export class Carrinho {
 public carrinhoFacade = inject(CarrinhoFacade)
 private router = inject(Router);
 private authFacade = inject(AuthFacade)
-removerItem(rmvItem:number){
-  this.carrinhoFacade.limparCarrinho();
+removerItem(rmvItem: number){
+  this.carrinhoFacade.removerItem(rmvItem);
 }
 
 limparCarrinho(){
