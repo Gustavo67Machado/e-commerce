@@ -7,8 +7,10 @@
 
 
 @if (carrinhoFacade.carrinhoVazio()) {
+    <hr>
     <p style="color: red;">Seu carrinho está vazio. Adicione um produto antes de finalizar a compra.</p>
-    <button type="button" routerLink="/produtos">Ver Produtos</button>
+    <hr>
+    <button mat-flat-button type="button" routerLink="/produtos">Ver Produtos</button>
 }@else if (!compraFinalizada()){
   <section>
     <h3>Resumo do pedido</h3>
@@ -62,5 +64,5 @@
     }
 
 
-    <button mat-button type="button" (click)="finalizar()" [disabled]="formulario.invalid">Finalizar compra</button>
+    <button mat-flat-button type="button" (click)="finalizar()" [disabled]="formulario.invalid">Finalizar compra</button>
 </form>
