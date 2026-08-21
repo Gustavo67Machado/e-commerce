@@ -14,7 +14,7 @@
   
 <hr>
 
-<section class="grid-produtos">
+< class="grid-produtos">
     @for(item of produtos(); track $index){
         <app-produto
         [nome] = "item.nome"
@@ -24,7 +24,25 @@
         >
         </app-produto>
     }
-</section>
+<hr>
+<!-- <section class="produto-selecionado">
+<h3>Produto Selecionado</h3>
+@if(produtoSelecionado()){
+<p class="texto-sucesso">
+    <strong>{{produtoSelecionado()}}</strong>
+</p>
+}@else {
+    <p class="texto-neutro">
+        <strong>Nenhum Protudo selecionado</strong>
+    </p>
+}
+</section> -->
+
+
+
+
+
+
 
 <!-- <button (click)= "adicionarAoCarrinho(item)">Adicionar ao carrinho</button> -->
 }
