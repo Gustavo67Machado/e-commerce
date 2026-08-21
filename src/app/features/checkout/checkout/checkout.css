@@ -1,0 +1,11 @@
+.pagina-checkout{
+    max-width: 700px;
+}
+
+.compra-finalizada {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 10px ; 
+
+}
