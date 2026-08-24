@@ -1,102 +1,99 @@
-import { Component,} from '@angular/core';
-import { signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Produto } from '../produto/produto';
 import { computed } from '@angular/core';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import { effect } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
-import { produtoService } from '../../../core/service/produto.service';
 import { inject } from '@angular/core';
-// import { Produto } from '../produtos';
+import { produtoService } from '../../../core/service/produto.service';
 import { MatButtonModule } from '@angular/material/button';
-import{ MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { CarrinhoFacade } from '../../../core/facedes/carrinho.facade';
 import { ItemCarrinho } from '../../../core/models/item-carrinho';
+import { ProdutoLoja } from '../../../core/models/produto-loja';
+import { RouterLink } from "@angular/router";
+
 @Component({
   selector: 'app-lista-produtos',
-  imports: [Produto, PrecoFormatadoPipe, UpperCasePipe, MatButtonModule, MatCardModule],
+  imports: [PrecoFormatadoPipe, UpperCasePipe, MatButtonModule, Produto, MatCardModule, RouterLink],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css',
 })
 export class ListaProdutos {
 
-  //!remover a lista produtos, agora os dados serão carregados via api Fakestoreapi
+  produtos = signal <ProdutoLoja[]>([]);
 
-produtos = signal <{ nome: string; preco: number } []> ([]);
+  carregando = signal(true);
 
-//?criar um estado de carregamento, 
-// ** true: requisição em andamento, exibir indicador  no templete
-// ! false: esconder indicador e exibir a lista de produtos
-carregando = signal(true);
-//! cria o metodo para a requisição dos produtos
+  carregarProdutos(){
 
-carregarProdutos(){
-  this.carregando.set(true); //! Ativa o loading
-  this.erro.set(null); //?limpa o erro anterior
-  this.produtoService.buscarProdutos().subscribe({
-        next:(dados) => {
-          const produtos = this.produtoService.transformarProdutos(dados);
-          this.produtos.set(produtos);
-          this.carregando.set(false);
-        },
-        error: (erro) =>{
-          console.error('Erro ao carregar os Produtos:, ', erro);
-          this.erro.set('Erro ao carregar Produtos. Verifique a sua conexão e tente novamente');
-          this.carregando.set(false);
-        },
-  });
-}
+    this.carregando.set(true);
+    this.erro.set(null);
+
+    this.produtoService.buscarProduto().subscribe({
+          next: (dados) => {
+            const produtos = this.produtoService.transformarProdutos(dados);
+            this.produtos.set(produtos);
+            this.carregando.set(false);
+          },
+          error: (erro) => {
+            console.error('Erro ao carregar os produtos:, ', erro);
+            this.erro.set('Erro ao carregar Produtos. Verifique sua conexão e tente novamente!');
+            this.carregando.set(false);
+          },
+    });
+  }
+
   exibirProduto (nome: string){
-    //console.log ('produtoSelecionado: ', nome);
+    console.log ('Produto Selecionado: ', nome);
     this.produtoSelecionado.set(nome);
   }
   adicionarProduto(){
     this.produtos.update(listaAtual =>[
-      ...listaAtual, {nome:'Processador core i5 14550f', preco: 2500 }
+      ...listaAtual, {nome: 'Processador Intel core i5 14550fs', preco:2500 }
     ]);
-//criado uma fun~ção para calcular a quantidade de produtos
   }
-totalProdutos = computed(() => this.produtos().length);
-valorTotal = computed(()=> { return this.produtos().reduce((total, item)=> total + item.preco,0)});
-substituirProdutos (){
-  this.produtos.set([
-    {nome: 'Teclado', preco: 40},
-    {nome: 'Mouse', preco: 10},
-    {nome: 'Monitor', preco: 100},
-    {nome: 'Desktop', preco: 500},
-    {nome: 'Headset', preco: 25},
-  ]);
-  //criado uma função que vai somar todos os preços
-}
-//! injetar httpclient dentro de construct, restruturar constructor
-constructor(){
-  //! Carregar a Api
-  this.carregarProdutos();
-  //! effects continuam iguais
-  effect(() =>{
-    console.log('Lista de Produtos Alterados: ', this.produtos());
-  });
-  effect(() => {
-    console.log('Valor total atualizado: ', this.valorTotal());
-  });
-  effect(()=> {
-if(typeof document !== 'undefined') {
-          document.title = `(${this.totalProdutos()})Minha Loja`;
-}
-  });
- }
- produtoSelecionado = signal<string | null>(null);
- carrinho = signal <{ nome: string; preco: number }[]>([]);
- erro = signal <string | null > (null);
-
- adicionarAoCarrinho (produto: ItemCarrinho){
- this.CarrinhoFacade.adicionarProdutoCarrinho(produto);
-  }
+  totalProdutos = computed(() => this.produtos().length);
   
-  //?================== inject ===============
-  private produtoService = inject(produtoService)
-  public CarrinhoFacade = inject(CarrinhoFacade)
+  valorTotal  = computed(() => {return this.produtos().reduce((total, item) => total + item.preco,0)});
 
-  quantidadedeCarrinho = this.CarrinhoFacade.quantidadeCarrinho;
-  totalCarrinho = this.CarrinhoFacade.totalCarrinho;
-}
+  valorTotalFormatado = computed(() => this.valorTotal().toFixed(2));
+  
+  substituirprodutos (){
+    this.produtos.set([
+      {nome: 'Teclado', preco: 40},
+       {nome: 'Mouse', preco: 10},
+        {nome: 'Monitor', preco: 100},
+          {nome: 'Desktop', preco: 500},
+            {nome: 'Headset', preco: 25},
+    ]);
+  }
+  constructor(){
+    this.carregarProdutos();
+     effect(() => {if (typeof document !== 'undefined') {
+        document.title = `(${this.totalProdutos()}) Minha Loja`;
+     }
+     });
+    }
+    produtoSelecionado = signal<string | null> (null);
+
+    carrinho = signal <{nome: string; preco: number }[]>([]);
+
+    erro = signal <string | null > (null);
+
+    adicionarAoCarrinho (produto:ItemCarrinho){
+
+      this.carrinhoFacade.adicionarProdutoCarrinho(produto);
+    }
+    
+    
+    //? ============ INJECT ============
+    private produtoService = inject (produtoService);
+    public carrinhoFacade = inject (CarrinhoFacade);
+
+
+    quantidadeCarrinho = this.carrinhoFacade.quantidadeCarrinho;
+    totalCarrinho = this.carrinhoFacade.totalCarrinho;
+  }
+//criamos uma totalprodutos para calcular o total de produtos
+//adicionado valortotal para somar todos os valores da lista que forem adicionados

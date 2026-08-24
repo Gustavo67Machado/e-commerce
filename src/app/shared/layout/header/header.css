@@ -2,7 +2,49 @@ mat-toolbar {
     z-index: 1000;
     display: flex;
     flex-wrap: wrap;
+    background-color: #4C8CCf;
 }
+
+mat-toolbar a{
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+mat-toolbar button{
+    color: #fff;
+}
+
+button:hover{
+    background-color: #b7d1eb;
+    color:#4C8CCf 
+}
+
+.btn-entrar{
+    background-color: #99cc99;
+    border: 2px solid #fff;
+}
+.btn-entrar:hover{
+    background-color: #329932;
+    color: #ffc800
+    border 2px color=gray;
+}
+
+.btn-sair:hover{
+    background-color: #ff3232;
+    color: #ddd;
+    border: 2px solid #ff3232
+}
+.btn-sair{
+    background-color: #cc0000;
+    border: #cc0000;
+}
+
+.email-header{
+    color: #ffc800;
+    font-size: 18px;
+    margin: 10px;
+}
+
 .flex-spacer {
     flex: 1 1 auto;
 }

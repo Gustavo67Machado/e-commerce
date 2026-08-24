@@ -6,12 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthFacade } from '../../../core/facedes/auth.facade';
 import { CarrinhoFacade } from '../../../core/facedes/carrinho.facade';
+import { UpperCasePipe } from '@angular/common';
 
 
 
 @Component({
   selector: 'app-header',
-  imports: [MatButtonModule, MatToolbarModule, RouterLink, MatIconModule],
+  imports: [MatButtonModule, MatToolbarModule, RouterLink, MatIconModule, UpperCasePipe],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
