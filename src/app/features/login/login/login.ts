@@ -3,9 +3,10 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validator, Validators } fr
 import { Router } from '@angular/router';
 import { AuthFacade } from '../../../core/facedes/auth.facade';
 import { MatAnchor } from "@angular/material/button";
+import { MatCard } from "@angular/material/card";
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, MatAnchor],
+  imports: [ReactiveFormsModule, MatAnchor, MatCard],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
