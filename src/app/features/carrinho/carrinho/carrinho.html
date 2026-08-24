@@ -1,38 +1,35 @@
-<section class="conteiner-carrinho">
+<section class="pagina-carrinho">
 
     <h2>Carrinho</h2>
-    @if(carrinhoFacade.carrinhoVazio()){
-        <p> Seu carrinho está vazio.</p>
-    <button mat-button type="button" routerLink="/produtos"> Ver produtos</button>    
+    @if (carrinhoFacade.carrinhoVazio()) {
+        <p>Seu carrinho está vazio.</p>
+        <button mat-button color="primary" routerLink="/produtos">Ver produto</button>
+
     }@else {
         <section class="lista-carrinho">
-            @for(item of carrinhoFacade.itensCarrinho(); track $index){
+            @for (item of carrinhoFacade.itensCarrinho(); track $index) {
                 <article class="item-carrinho">
                     <div>
-                        <p><strong>{{item.nome}}</strong></p>
-                        <p>{{item.preco | precoFormatado}}</p>
+                        <p class="nome-produto"><strong>{{item.nome}}</strong></p>
+                        <p class="preco-produto">{{item.preco | precoFormatado}}</p>
                         
-                    <button mat-stroked-button color="warn"
-                     type="button"
-                    (click)="removerItem ($index)">Remover</button>
+                        <button  mat-stroked-button color="warn" 
+                        type="button" 
+                        (click)="removerItem($index)">Remover</button>
                     </div>
-
-
                 </article>
             }
         </section>
-        <section class="resumo-carrino">
-            <p><strong>Itens no carrinho: </strong>{{carrinhoFacade.quantidadeCarrinho()}}</p>
-            <p><strong>Total:</strong>{{ carrinhoFacade.totalCarrinho() | precoFormatado}}</p>
+        <section class="resumo-carrinho">
+            <p><strong>Itens no carrinho: </strong> {{carrinhoFacade.quantidadeCarrinho()}}</p>
+            <P><strong>Total:</strong>{{ carrinhoFacade.totalCarrinho() | precoFormatado}}</P>
         </section>
         <section class="acoes-carrinho">
-            <button mat-button type="button" (click)="limparCarrinho()">Limpar carrinho</button>
-            <button mat-button type="button" routerLink="/produtos">Continuar Comprando</button>
-            <button class="acao-carrinho-comfirmar" mat-button type="button" routerLink="/checkout">Finalizar Compra</button>
-            <button class="acao-carrinho-cancelar" mat-button type="button" (click)="cancelarCompra()">Cancelar Compra</button>
+            <button mat-button type="button" (click)="limparCarrinho()"> Limpar carrinho</button>
+            <button mat-button type="button" routerLink="/produtos"> Continuar compra</button>
+            <button class="carrinho-confirmar"  mat-button type="button" routerLink="/checkout"> Finalizar compra</button>
+            <button class="carrinho-cancelar"  mat-button type="button" (click)="cancelarCompra()"> Cancelar compra</button>
         </section>
     }
+
 </section>
-
-
-
