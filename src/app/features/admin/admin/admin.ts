@@ -1,9 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthFacade } from '../../../core/facedes/auth.facade';
+import { MatAnchor } from "@angular/material/button";
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [MatAnchor],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })
