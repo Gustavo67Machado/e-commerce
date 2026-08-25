@@ -2,5 +2,8 @@
     max-width: 700px;
 }
 .login-finalizado{
-    
+   text-align: center;
+}
+.formGroup{
+    width: 100%;
 }
