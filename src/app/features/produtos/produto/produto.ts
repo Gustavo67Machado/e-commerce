@@ -27,4 +27,18 @@ export class Produto {
   adicionarAoCarrinho() {
     this.produtoAdicionado.emit(({nome: this.nome, preco: this.preco}))
   }
+
+//=========função=============
+adicionarFavorito(produto: any) {
+  let favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
+
+  const jaExiste = favoritos.some((item: any) => item.id === produto.id);
+
+  if (!jaExiste) {
+    favoritos.push(produto);
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+  }
+}
+
+
 }
