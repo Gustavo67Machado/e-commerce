@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { authGuard } from "./core/guards/auth.guard";
 import { adimnGuard } from "./core/guards/admin.guard";
+import { Favoritos } from "./features/produtos/favoritos/favoritos";
 
 export const routes: Routes = [
     {
@@ -28,7 +29,7 @@ export const routes: Routes = [
     {
         path: 'acesso-negado',
         loadComponent: () =>
-            import('./features/acesso-negado/acesso-negado/acesso-negado').then((m) => m.AcessoNegado)
+            import('./features/acesso-negado/acesso-negado/acesso-negado').then((m) => m.AcessoNegado),
 
     },
     {
@@ -40,9 +41,18 @@ export const routes: Routes = [
         path: 'admin',
         canActivate: [adimnGuard],
         loadComponent: () =>
-            import('./features/admin/admin/admin').then((m) => m.Admin)
+            import('./features/admin/admin/admin').then((m) => m.Admin),
 
     },
+
+     {
+        path: 'Favoritos',
+        canActivate: [adimnGuard],
+        loadComponent: () =>
+            import('./features/produtos/favoritos/favoritos').then((m) => m.Favoritos),
+
+    },
+
     {
         path:'**',
         redirectTo: '',
