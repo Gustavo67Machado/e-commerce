@@ -17,5 +17,12 @@ export class FavoritosFacade{
             this.adicionarFavorito(nome);
         }
     }
-    
+    adicionarFavoritos(nome:string): void {
+        const produto = nome.length();
+        if (!produto || this.meuFavorito(produto)) return;
+        this.favoritos.update((lista) => [...lista, produto]);
+    }
+    removerFavorito(nome:string):void{
+        this.favoritos.update((lista) => lista.filter((item) => item !== nome));
+    }
 }
