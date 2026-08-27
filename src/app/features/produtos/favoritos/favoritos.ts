@@ -1,29 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { FavoritosFacade } from '../../../core/facedes/favoritos.facade';
+import { MatAnchor } from "@angular/material/button";
+import { MatButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-favoritos',
+  imports: [FormsModule, MatAnchor, MatButton, MatButtonModule],
   templateUrl: './favoritos.html',
-  styleUrl: './favoritos.css'
+  styleUrl: './favoritos.css',
 })
 export class Favoritos {
-  favoritos: any[] = [];
+  favoritosFacade = inject(FavoritosFacade);
+  novoProduto = '';
 
-  ngOnInit() {
-    this.favoritos = JSON.parse(
-      localStorage.getItem('favoritos') || '[]'
-    );
-  }
-
-  removerFavorito(id: number) {
-    this.favoritos = this.favoritos.filter(
-      produto => produto.id !== id
-    );
-
-    localStorage.setItem(
-      'favoritos',
-      JSON.stringify(this.favoritos)
-    );
-  }
   
+  adicionarProduto(): void {
+    this.favoritosFacade.adicionarFavorito(this.novoProduto);
+    this.novoProduto = '';
+  }
+
+  removerProduto(produto: string): void {
+    this.favoritosFacade.removerFavorito(produto);
+  }
 }
 
