@@ -1,28 +1,36 @@
-import { Injectable, signal } from "@angular/core";
-import { Favoritos } from "../../features/produtos/favoritos/favoritos";
+import { Injectable, signal } from '@angular/core';
+
+
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
-export class FavoritosFacade{
-    private favoritos = signal<string[]>([]);
-    listaFavoritos = this.favoritos.asReadonly();
-    meuFavorito(nome: string): boolean {
-        return this.favoritos().includes(nome)
-    
+export class FavoritosFacade {
+  // Estado centralizado dos favoritos, compartilhado entre os componentes.
+  private favoritos = signal<string[]>([]);
+
+  listaFavoritos = this.favoritos.asReadonly();
+
+  meuFavorito(nome: string): boolean {
+    return this.favoritos().includes(nome);
+  }
+
+  alternarFavorito(nome: string): void {
+    if (this.meuFavorito(nome)) {
+      this.removerFavorito(nome);
+    } else {
+      this.adicionarFavorito(nome);
     }
-    alternarFavorito(nome: string): void {
-        if (this.meuFavorito(nome)) {
-            this.removerFavorito(nome);
-        }else{
-            this.adicionarFavorito(nome);
-        }
-    }
-    adicionarFavoritos(nome:string): void {
-        const produto = nome.length();
-        if (!produto || this.meuFavorito(produto)) return;
-        this.favoritos.update((lista) => [...lista, produto]);
-    }
-    removerFavorito(nome:string):void{
-        this.favoritos.update((lista) => lista.filter((item) => item !== nome));
-    }
+  }
+
+  adicionarFavorito(nome: string): void {
+    const produto = nome.trim();
+    if (!produto || this.meuFavorito(produto)) return;
+
+    this.favoritos.update((lista) => [...lista, produto]);
+  }
+
+  removerFavorito(nome: string): void {
+    this.favoritos.update((lista) => lista.filter((item) => item !== nome));
+  }
+
 }
