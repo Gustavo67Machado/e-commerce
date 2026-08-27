@@ -1,7 +1,6 @@
 import { Routes } from "@angular/router";
 import { authGuard } from "./core/guards/auth.guard";
 import { adimnGuard } from "./core/guards/admin.guard";
-import { Favoritos } from "./features/produtos/favoritos/favoritos";
 
 export const routes: Routes = [
     {
@@ -46,8 +45,7 @@ export const routes: Routes = [
     },
 
      {
-        path: 'Favoritos',
-        canActivate: [adimnGuard],
+        path: 'favoritos',
         loadComponent: () =>
             import('./features/produtos/favoritos/favoritos').then((m) => m.Favoritos),
 
