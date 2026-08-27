@@ -1,10 +1,11 @@
 //fluxo de dados criados 
-import { Component, Input, Output, EventEmitter, output } from '@angular/core';
+import { Component, Input, Output, EventEmitter, output, inject } from '@angular/core';
 import { UpperCasePipe, CurrencyPipe } from '@angular/common';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import { MatButton} from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader, MatCardActions,MatCardTitle } from "@angular/material/card";
 import { ItemCarrinho } from '../../../core/models/item-carrinho';
+import { FavoritosFacade } from '../../../core/facedes/favoritos.facade';
 
 @Component({
   selector: 'app-produto',
@@ -13,6 +14,7 @@ import { ItemCarrinho } from '../../../core/models/item-carrinho';
   styleUrl: './produto.css',
 })
 export class Produto {
+  favoritosfacade = inject(FavoritosFacade)
 
   //Entrada de dados de Lista-produtos
   @Input() nome: string = '';
@@ -28,16 +30,9 @@ export class Produto {
     this.produtoAdicionado.emit(({nome: this.nome, preco: this.preco}))
   }
 
-//=========função=============
-adicionarFavorito(produto: any) {
-  let favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
-
-  const jaExiste = favoritos.some((item: any) => item.id === produto.id);
-
-  if (!jaExiste) {
-    favoritos.push(produto);
-    localStorage.setItem('favoritos', JSON.stringify(favoritos));
-  }
+@Output() favoritoAdicionado = new EventEmitter<ItemCarrinho>();
+alternarFavorito(){
+  this.favoritosfacade.adicionarFavorito(this.nome);
 }
 
 
