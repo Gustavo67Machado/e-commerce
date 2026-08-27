@@ -1,3 +1,25 @@
+<section class="pagina-favoritos">
+  <header class="cabecalho-favoritos">
+    <h2>Meus Favoritos</h2>
+    <p>Adicione produtos à sua lista de favoritos.</p>
+  </header>
+   <hr />
 
-<h2>Meus Favoritos</h2>
-<p>Nenhum produto adicionado aos favoritos</p>
+  @if (favoritosFacade.listaFavoritos().length === 0) {
+    <p class="texto-neutro">Nenhum produto favorito adicionado</p>
+  } @else {
+      @for (item of favoritosFacade.listaFavoritos(); track item) {
+          <span>{{ item }}</span>
+          <section class="remover-favorito">
+            
+            <button mat-flat-button type="button" (click)="removerProduto(item)">Remover</button>
+          </section>
+      }
+  }
+</section>
+<section class="pagina-carrinho">
+
+
+
+
+
